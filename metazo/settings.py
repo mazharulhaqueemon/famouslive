@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import dj_database_url
+import os
 # Jazzmin Custom Admin Panel
 from .jazzmin_config import JAZZMIN_SETTINGS
 
@@ -54,6 +56,8 @@ INSTALLED_APPS = [
     'notifications',
     'profiles',
     'searches',
+    'post',
+    'livestream'
 ] 
 
 MIDDLEWARE = [
@@ -97,16 +101,23 @@ WSGI_APPLICATION = 'metazo.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+#  this database config need for local and c panel config
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd14v1vojhqs1vd',
-        'USER': 'aenbecvfxteink',
-        'PASSWORD': '05e95987098beb8ba3ebdcdb07783a4b514844d46c41e2b834c1b78cd28be1d8',
-        'HOST': 'ec2-54-204-241-136.compute-1.amazonaws.com',
+        'NAME': 'd844p9um8opa8i',
+        'USER': 'lyofyugvxzkaem',
+        'PASSWORD': 'b224d05ebaf187ea72064c62425ba18679fb13083ad6b513a604b6d65d248250',
+        'HOST': 'ec2-3-234-204-26.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
+
 
 
 # Password validation
@@ -170,20 +181,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     # 'rest_framework.permissions.AllowAny',
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ],
 }
 
 # Configuring SMTP Server
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'itheadnurul@gmail.com'
+EMAIL_HOST_USER = 'emonbakhtiar12@gmail.com'
 EMAIL_HOST_PASSWORD = 'ujgxaetdmglvgdaa' #past the key or password app here
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'itheadnurul@gmail.com'
+DEFAULT_FROM_EMAIL = 'emonbakhtiar12@gmail.com'

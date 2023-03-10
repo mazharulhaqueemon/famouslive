@@ -11,6 +11,9 @@ urlpatterns = [
     path('api/v1/notifications/',include("notifications.api.urls")),
     path('api/v1/profiles/',include("profiles.api.urls")),
     path('api/v1/searches/',include("searches.api.urls")),
+    path('api/v1/post/',include("post.urls")),
+    path('api/v1/live-streamings/',include("livestream.urls")),
+
 
     # Firebase Cloud Messaging (FCM)
     path('api/v1/fcm/',include("fcm.api.urls")),

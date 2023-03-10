@@ -17,25 +17,39 @@ def cover_image_path(instance, filename):
 
     return os.path.join('profiles/cover_images/',filename) 
 
-class Profile(models.Model): 
-    user = models.OneToOneField(User, on_delete=models.CASCADE) 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=200)
-    # Custom Slug
-    slug = models.CharField(max_length=250,unique=True,blank=True,null=True)
+    slug = models.CharField(max_length=250, unique=True, blank=True, null=True)
     email = models.EmailField(max_length=250)
-    profile_image   = models.ImageField(upload_to=profile_image_path, blank=True, null=True)
-    cover_image   = models.ImageField(upload_to=cover_image_path, blank=True, null=True)
-    birthday = models.DateField(auto_now=False,auto_now_add=False,blank=True,null=True)
-    gender = models.CharField(max_length=20,blank=True,null=True)
-    address = models.CharField(max_length=250,blank=True,null=True)
-    about = models.TextField(blank=True,null=True)
-    
-    # Date Only
+    profile_image = models.ImageField(upload_to=profile_image_path, blank=True, null=True)
+    cover_image = models.ImageField(upload_to=cover_image_path, blank=True, null=True)
+    birthday = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    gender = models.CharField(max_length=20, blank=True, null=True)
+    iso_code = models.CharField(max_length=250, blank=True, null=True)
+    iso3_code = models.CharField(max_length=250, blank=True, null=True)
+    phone_code = models.CharField(max_length=250, blank=True, null=True)
+    country_name = models.CharField(max_length=250, blank=True, null=True)
+    mobile_number = models.CharField(max_length=250, blank=True, null=True)
+    streaming_title = models.CharField(max_length=250, blank=True, null=True)
+    earn_coins = models.IntegerField(default=0)
+    earn_loves = models.IntegerField(default=0)
+    followers = models.ManyToManyField(User, related_name='following_profile')
     registered_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=False,auto_now_add=False,blank=True,null=True)
+    updated_date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
     def __str__(self):
-        return self.full_name 
+        return self.full_name
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_userfollower')
+    date_followed = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} --> {self.follower}"
+
 
 @receiver(post_delete,sender=Profile)
 def profile_submission_delete(sender,instance,**kwargs):

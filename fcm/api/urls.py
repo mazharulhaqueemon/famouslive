@@ -2,9 +2,11 @@ from django.urls import path
 from .views import (
     RegisterDeviceCreateApiView,UserTokenUpdateApiView,PeerDeviceUpdateApiView,
     SinglePushCreateApiView,SinglePushForCallingCreateApiView,
+    AgoraRtcTokenRetrieveApiView,
 )
 
 urlpatterns=[ 
+    path('agora-rtc-token-retrieve/',AgoraRtcTokenRetrieveApiView.as_view()),
     # FCM stuffs
     path('device-create/',RegisterDeviceCreateApiView.as_view()),
     path('token-update/',UserTokenUpdateApiView.as_view()),
